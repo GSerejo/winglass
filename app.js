@@ -183,6 +183,31 @@
   }, { threshold: 0.6 });
   document.querySelectorAll("[data-count]").forEach(el => counter.observe(el));
 
+  // Monitor do sistema: números e gráficos andando como na pílula de verdade (valores de demonstração).
+  const meters = [...document.querySelectorAll("#meters .meter")];
+  if (meters.length) {
+    const fmt = (v, kind) => kind === "net" ? "↓" + (v / 10).toFixed(1).replace(".", ",") + " MB/s" : Math.round(v) + "%";
+    const state = meters.map(m => {
+      const base = { cpu: 28, ram: 61, gpu: 14, net: 24, disk: 6 }[m.dataset.kind];
+      return { el: m, kind: m.dataset.kind, base, v: base, hist: Array.from({ length: 30 }, () => base) };
+    });
+    const draw = s => {
+      const max = s.kind === "net" ? Math.max(40, ...s.hist) * 1.2 : 100;
+      const pts = s.hist.map((v, i) => `${(i / (s.hist.length - 1)) * 120},${40 - (v / max) * 36}`);
+      s.el.querySelector(".l").setAttribute("d", "M" + pts.join(" L"));
+      s.el.querySelector(".a").setAttribute("d", "M0,40 L" + pts.join(" L") + " L120,40 Z");
+      s.el.querySelector("span").textContent = fmt(s.v, s.kind);
+    };
+    const step = () => state.forEach(s => {
+      const swing = { cpu: 14, ram: 2, gpu: 16, net: 18, disk: 10 }[s.kind];
+      s.v = Math.max(1, Math.min(s.kind === "net" ? 90 : 99, s.v + (Math.random() - 0.5) * swing + (s.base - s.v) * 0.15));
+      s.hist.push(s.v); s.hist.shift();
+      draw(s);
+    });
+    state.forEach(draw);
+    if (!calm) setInterval(step, 1000);
+  }
+
   // Anotações: o texto se digita sozinho, apaga e recomeça.
   const typed = document.querySelector(".typed");
   if (typed) {

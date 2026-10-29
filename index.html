@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WinGlass · Liquid Glass para Windows 11</title>
-<meta name="description" content="WinGlass deixa a barra de tarefas, o menu Iniciar e os menus do Windows 11 com vidro líquido, e traz widgets de música com mixer, agenda, área de transferência e anotações. Grátis na Microsoft Store.">
+<meta name="description" content="WinGlass deixa a barra de tarefas, o menu Iniciar e os menus do Windows 11 com vidro líquido, e traz widgets de música com mixer, agenda, área de transferência, anotações e monitor do sistema. Grátis na Microsoft Store.">
 <meta name="theme-color" content="#05040c">
 <meta property="og:type" content="website">
 <meta property="og:title" content="WinGlass · O Windows 11, feito de vidro líquido">
@@ -55,7 +55,7 @@
 <main>
   <!-- Hero -->
   <div class="hero wrap">
-    <a class="chip lg rf fade-up" style="--d:.05s" href="#recursos"><b>NOVO</b> Agenda, mixer, área de transferência e anotações →</a>
+    <a class="chip lg rf fade-up" style="--d:.05s" href="#recursos"><b>NOVO</b> Monitor do sistema, agenda, mixer e mais →</a>
     <h1 id="headline">O Windows 11, <span class="shine">feito de vidro líquido.</span></h1>
     <p class="lead fade-up" style="--d:.7s">A barra de tarefas, o menu Iniciar e os menus do sistema ganham vidro de verdade, e os widgets escorrem da barra como líquido. É só instalar e pronto.</p>
     <div class="cta-row fade-up" style="--d:.85s">
@@ -80,8 +80,8 @@
 
   <div class="marquee" aria-hidden="true">
     <div class="track">
-      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Terminal (beta)</span>
-      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Terminal (beta)</span>
+      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Monitor do sistema</span><span class="lg"><i></i>Terminal (beta)</span>
+      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Monitor do sistema</span><span class="lg"><i></i>Terminal (beta)</span>
     </div>
   </div>
 
@@ -150,6 +150,19 @@
           <h3>Até o Terminal.</h3>
           <p>O Windows Terminal ganha o mesmo vidro, para o código também ficar bonito.</p>
           <div class="art"><pre class="term" aria-hidden="true"><b>PS C:\&gt;</b> winglass --estilo aurora<br><i>✓ vidro aplicado na barra</i><br><i>✓ menu Iniciar combinando</i><br><b>PS C:\&gt;</b> <span class="cur"></span></pre></div>
+        </article>
+
+        <article class="card lg spot tilt c-full" data-reveal>
+          <span class="tag">Monitor do sistema <span class="new">NOVO</span></span>
+          <h3>Seu PC, ao vivo na barra.</h3>
+          <p>CPU, RAM, GPU, rede e disco numa pílula, você escolhe quais. Um toque abre o último minuto em gráficos: cada núcleo da CPU, quem mais usa memória, a VRAM, download e upload e o espaço do disco.</p>
+          <div class="art"><div class="meters" id="meters" aria-hidden="true">
+            <div class="meter" style="--c:#7fb6ff" data-kind="cpu"><b>CPU</b><span>28%</span><svg viewBox="0 0 120 40" preserveAspectRatio="none"><path class="a"/><path class="l"/></svg></div>
+            <div class="meter" style="--c:#b48bff" data-kind="ram"><b>RAM</b><span>61%</span><svg viewBox="0 0 120 40" preserveAspectRatio="none"><path class="a"/><path class="l"/></svg></div>
+            <div class="meter" style="--c:#5fe0b0" data-kind="gpu"><b>GPU</b><span>12%</span><svg viewBox="0 0 120 40" preserveAspectRatio="none"><path class="a"/><path class="l"/></svg></div>
+            <div class="meter" style="--c:#4fd1ff" data-kind="net"><b>REDE</b><span>↓2,4 MB/s</span><svg viewBox="0 0 120 40" preserveAspectRatio="none"><path class="a"/><path class="l"/></svg></div>
+            <div class="meter" style="--c:#ffc15e" data-kind="disk"><b>DISCO</b><span>4%</span><svg viewBox="0 0 120 40" preserveAspectRatio="none"><path class="a"/><path class="l"/></svg></div>
+          </div></div>
         </article>
 
         <article class="card lg spot tilt c-full" data-reveal>
@@ -273,6 +286,7 @@
         <details class="lg" data-reveal><summary>Funciona no Windows 10?</summary><p>Não. O WinGlass foi feito para o Windows 11, que é onde ficam a barra, o menu Iniciar e os menus que ele transforma.</p></details>
         <details class="lg" data-reveal><summary>Ele muda alguma coisa no sistema para sempre?</summary><p>Não. O vidro é aplicado enquanto o app está ligado. Desligou ou saiu, o Windows volta exatamente ao visual original. Ao desinstalar, o Windows remove tudo.</p></details>
         <details class="lg" data-reveal><summary>Preciso de conta Google?</summary><p>Só se quiser ver os seus eventos no widget de agenda. Todo o resto funciona sem conta nenhuma.</p></details>
+        <details class="lg" data-reveal><summary>O monitor do sistema deixa o PC mais lento?</summary><p>Não. Ele lê os mesmos contadores do Gerenciador de Tarefas uma vez por segundo, e a lista de quem mais usa memória só é lida com o cartão aberto. Nada sai do seu PC.</p></details>
         <details class="lg" data-reveal><summary>O WinGlass coleta meus dados?</summary><p>Não. Ele não tem servidores, telemetria nem anúncios. Configurações, anotações e o histórico da área de transferência ficam no seu computador. Leia a <a href="privacidade.html">política de privacidade</a>.</p></details>
       </div>
     </div>
