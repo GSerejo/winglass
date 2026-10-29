@@ -4,78 +4,308 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WinGlass · Liquid Glass para Windows 11</title>
-<meta name="description" content="WinGlass deixa a barra de tarefas, o menu Iniciar e os menus do Windows 11 com vidro líquido, e traz widgets de música, agenda, área de transferência e anotações.">
+<meta name="description" content="WinGlass deixa a barra de tarefas, o menu Iniciar e os menus do Windows 11 com vidro líquido, e traz widgets de música com mixer, agenda, área de transferência e anotações. Grátis na Microsoft Store.">
+<meta name="theme-color" content="#05040c">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WinGlass · O Windows 11, feito de vidro líquido">
+<meta property="og:description" content="Barra de tarefas em pílulas, menu Iniciar de vidro e widgets que escorrem da barra. Grátis na Microsoft Store.">
+<meta property="og:image" content="https://gserejo.github.io/winglass/img/desk.webp">
+<meta property="og:url" content="https://gserejo.github.io/winglass/">
+<meta name="twitter:card" content="summary_large_image">
 <!-- Verificação do Google Search Console: cole aqui a meta tag google-site-verification. -->
 <link rel="icon" href="img/icon.png">
+<link rel="preload" as="image" href="img/desk.webp">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="top wrap">
+
+<!-- Mapas de refração do vidro (usados pelo Chromium; nos outros navegadores fica só o desfoque). -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="lg-refract" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="11" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="3" result="soft"/>
+    <feDisplacementMap in="SourceGraphic" in2="soft" scale="34" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+  <filter id="lg-lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="1" seed="3" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="6" result="soft"/>
+    <feDisplacementMap in="SourceGraphic" in2="soft" scale="70" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor-glow" aria-hidden="true"></div>
+
+<header class="nav lg rf spin" id="nav">
   <a class="brand" href="./"><img src="img/icon.png" alt="">WinGlass</a>
-  <nav class="links">
+  <nav class="links" aria-label="Seções">
     <a href="#recursos">Recursos</a>
+    <a href="#liquido">Animação</a>
+    <a href="#estilos">Estilos</a>
     <a href="#google-agenda">Google Agenda</a>
-    <a href="privacidade.html">Privacidade</a>
-    <a href="#contato">Contato</a>
+    <a href="#perguntas">Perguntas</a>
   </nav>
+  <a class="btn lg rf magnetic" href="https://apps.microsoft.com/detail/9NJP11JXN4S9?mode=direct">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+    Baixar grátis
+  </a>
 </header>
 
 <main>
+  <!-- Hero -->
   <div class="hero wrap">
-    <p class="eyebrow">Liquid Glass · Windows 11</p>
-    <h1>O Windows 11,<br><span>feito de vidro líquido.</span></h1>
-    <p class="lead">O WinGlass aplica um efeito de vidro na barra de tarefas, no menu Iniciar e nos menus do sistema, e coloca widgets de vidro na barra: música, agenda, área de transferência e anotações.</p>
-    <a class="cta" href="https://apps.microsoft.com/detail/9NJP11JXN4S9">Baixar na Microsoft Store</a>
-    <p class="note">Para Windows 11. Interface em português.</p>
-    <img class="shot" src="img/hero.jpg" alt="Barra de tarefas do Windows 11 com o efeito de vidro líquido do WinGlass" width="1600" height="900">
+    <a class="chip lg rf fade-up" style="--d:.05s" href="#recursos"><b>NOVO</b> Agenda, mixer, área de transferência e anotações →</a>
+    <h1 id="headline">O Windows 11, <span class="shine">feito de vidro líquido.</span></h1>
+    <p class="lead fade-up" style="--d:.7s">A barra de tarefas, o menu Iniciar e os menus do sistema ganham vidro de verdade, e os widgets escorrem da barra como líquido. É só instalar e pronto.</p>
+    <div class="cta-row fade-up" style="--d:.85s">
+      <a class="store lg rf magnetic" href="https://apps.microsoft.com/detail/9NJP11JXN4S9?mode=direct" aria-label="Baixar o WinGlass na Microsoft Store">
+        <img src="img/ms-store-white.svg" alt="Baixar na Microsoft Store" width="161" height="44">
+      </a>
+      <a class="btn lg rf magnetic" href="#recursos">Ver o que ele faz
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg>
+      </a>
+    </div>
+    <div class="micro fade-up" style="--d:1s"><span>Grátis</span><span>Para Windows 11</span><span>Sem conta, sem anúncios, sem telemetria</span></div>
+
+    <div class="stage fade-up" style="--d:1.05s" id="stage">
+      <div class="screen lg" id="screen">
+        <img src="img/desk.webp" alt="Área de trabalho do Windows 11 com a barra de tarefas em pílulas de vidro do WinGlass" width="1920" height="1080" fetchpriority="high">
+        <div class="float f-music"><img src="img/w-music.webp" alt="Widget de música do WinGlass" width="428" height="181"></div>
+        <div class="float f-cal"><img src="img/w-calendar.webp" alt="Agenda do WinGlass" width="338" height="305"></div>
+      </div>
+      <div class="drop lg" aria-hidden="true"></div>
+    </div>
   </div>
 
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Terminal (beta)</span>
+      <span class="lg"><i></i>Barra de tarefas</span><span class="lg"><i></i>Menu Iniciar</span><span class="lg"><i></i>Configurações rápidas</span><span class="lg"><i></i>Notificações</span><span class="lg"><i></i>Controles de mídia</span><span class="lg"><i></i>Ícones ocultos</span><span class="lg"><i></i>Widget de música</span><span class="lg"><i></i>Mixer por app</span><span class="lg"><i></i>Google Agenda</span><span class="lg"><i></i>Área de transferência</span><span class="lg"><i></i>Anotações</span><span class="lg"><i></i>Terminal (beta)</span>
+    </div>
+  </div>
+
+  <!-- Recursos -->
   <section id="recursos">
     <div class="wrap">
-      <h2>O que o WinGlass faz</h2>
-      <p class="sub">Tudo roda no seu computador. Sem conta, sem anúncios, sem telemetria.</p>
-      <div class="grid">
-        <div class="card glass"><h3>Vidro no sistema</h3><p>Barra de tarefas, menu Iniciar, Configurações rápidas e notificações com desfoque, transparência e cor ajustáveis.</p></div>
-        <div class="card glass"><h3>Barra em pílulas</h3><p>A barra se divide em pílulas de vidro: widgets à esquerda, apps no meio e a bandeja à direita.</p></div>
-        <div class="card glass"><h3>Widget de música</h3><p>O que está tocando, com capa, progresso, volume e um mixer com o volume de cada app.</p></div>
-        <div class="card glass"><h3>Agenda</h3><p>O dia e o mês na barra e, num toque, os próximos eventos do seu Google Agenda (opcional).</p></div>
-        <div class="card glass"><h3>Área de transferência</h3><p>Os últimos textos e imagens copiados, para colar de novo com um clique.</p></div>
-        <div class="card glass"><h3>Anotações rápidas</h3><p>Um bloco de notas de vidro sempre à mão, salvo no próprio computador.</p></div>
+      <div class="head" data-reveal>
+        <span class="kicker">Recursos</span>
+        <h2>Tudo que você toca<br><span class="shine">vira vidro.</span></h2>
+        <p class="sub">O efeito é aplicado nos próprios elementos do Windows. Não é uma dock por cima nem um menu falso: tudo continua funcionando como sempre, só que em vidro.</p>
+      </div>
+
+      <div class="bento">
+        <article class="card lg spot tilt c-wide" data-reveal>
+          <span class="tag">Barra em pílulas</span>
+          <h3>A barra flutua sobre o papel de parede.</h3>
+          <p>Widgets à esquerda, apps no meio e a bandeja à direita, cada grupo na sua pílula de vidro, com cantos, brilho e borda de luz ajustáveis.</p>
+          <div class="art bar-art"><img src="img/w-bar.webp" alt="Barra de tarefas em pílulas de vidro sobre o papel de parede, com o widget de música aberto" width="1440" height="360" loading="lazy"></div>
+        </article>
+
+        <article class="card lg spot tilt c-third" data-reveal style="--d:.08s">
+          <span class="tag">Agenda <span class="new">NOVO</span></span>
+          <h3>Seu dia, a um toque.</h3>
+          <p>O dia e o mês na barra, e o mês inteiro com o Google Agenda.</p>
+          <div class="art"><img src="img/w-calendar.webp" alt="Cartão da agenda do WinGlass" width="338" height="305" loading="lazy"></div>
+        </article>
+
+        <article class="card lg spot tilt c-half" data-reveal>
+          <span class="tag">Música <span class="new">MIXER</span></span>
+          <h3>Seu som, em vidro.</h3>
+          <p>Capa, controles, progresso e volume do app que está tocando. Vire o cartão e ajuste o volume de cada app aberto.</p>
+          <div class="art"><img src="img/w-music.webp" alt="Widget de música do WinGlass" width="428" height="181" loading="lazy"></div>
+          <div class="pills"><img src="img/p-music.webp" alt="Pílula de música na barra" width="220" height="41" loading="lazy"><img src="img/p-calendar.webp" alt="Pílula da agenda na barra" width="73" height="41" loading="lazy"></div>
+        </article>
+
+        <article class="card lg spot tilt c-half" data-reveal style="--d:.08s">
+          <span class="tag">Área de transferência <span class="new">NOVO</span></span>
+          <h3>Copiou? Está guardado.</h3>
+          <p>Os últimos textos e imagens que você copiou ficam numa pílula. Um clique cola de novo no app em que você estava.</p>
+          <div class="art">
+            <div class="clip" aria-hidden="true">
+              <div style="--i:0"><span class="pin">★</span><b>Endereço da entrega</b><em>fixado</em></div>
+              <div style="--i:1"><span>⧉</span><b>https://gserejo.github.io/winglass/</b><em>agora</em></div>
+              <div style="--i:2"><span>▣</span><b>Imagem · 1920 × 1080</b><em>2 min</em></div>
+              <div style="--i:3"><span>⧉</span><b>Reunião às 15h com o time</b><em>5 min</em></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card lg spot tilt c-third" data-reveal>
+          <span class="tag">Anotações <span class="new">NOVO</span></span>
+          <h3>Um bloco de notas sempre à mão.</h3>
+          <p>Escreva e pronto: ele salva sozinho, no seu computador.</p>
+          <div class="art"><div class="note" aria-hidden="true"><small>ANOTAÇÕES</small><span class="typed" data-type="Comprar café ☕&#10;Ligar para a Ana às 17h&#10;Ideia: tema Aurora no notebook"></span></div></div>
+        </article>
+
+        <article class="card lg spot tilt c-third" data-reveal style="--d:.08s">
+          <span class="tag">Menus do sistema</span>
+          <h3>Até os menus viram vidro.</h3>
+          <p>Configurações rápidas, mídia, notificações e ícones ocultos.</p>
+          <div class="art"><img src="img/w-quick.webp" alt="Configurações rápidas do Windows com o vidro do WinGlass" width="358" height="524" loading="lazy" style="max-height:300px;width:auto"></div>
+        </article>
+
+        <article class="card lg spot tilt c-third" data-reveal style="--d:.16s">
+          <span class="tag">Terminal <span class="new">BETA</span></span>
+          <h3>Até o Terminal.</h3>
+          <p>O Windows Terminal ganha o mesmo vidro, para o código também ficar bonito.</p>
+          <div class="art"><pre class="term" aria-hidden="true"><b>PS C:\&gt;</b> winglass --estilo aurora<br><i>✓ vidro aplicado na barra</i><br><i>✓ menu Iniciar combinando</i><br><b>PS C:\&gt;</b> <span class="cur"></span></pre></div>
+        </article>
+
+        <article class="card lg spot tilt c-full" data-reveal>
+          <span class="tag">Menu Iniciar</span>
+          <h3>O Iniciar, combinando.</h3>
+          <p>O mesmo vidro, a mesma tinta e os mesmos cantos da barra. Tudo conversa.</p>
+          <div class="art"><img src="img/w-start.webp" alt="Menu Iniciar do Windows 11 com o vidro do WinGlass" width="1113" height="306" loading="lazy"></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section>
-    <div class="wrap duo">
-      <img src="img/musica.jpg" alt="Widget de música do WinGlass aberto acima da barra de tarefas" width="1200" height="675" loading="lazy">
-      <img src="img/iniciar.jpg" alt="Menu Iniciar do Windows 11 com o vidro do WinGlass" width="1200" height="675" loading="lazy">
+  <!-- Sequência líquida -->
+  <section class="seq" id="liquido">
+    <div class="pin">
+      <div class="wrap grid">
+        <div data-reveal>
+          <span class="kicker">Animação líquida</span>
+          <h2>Toque na pílula.<br><span class="shine">O vidro escorre.</span></h2>
+          <p class="sub">Os widgets não simplesmente aparecem: o vidro sobe da barra, se solta em gotas e assenta no cartão. Toque de novo e ele volta para dentro da pílula.</p>
+          <ol class="steps" id="steps">
+            <li class="on"><span>1</span>A pílula se estica</li>
+            <li><span>2</span>O vidro sobe</li>
+            <li><span>3</span>Ganha forma de cartão</li>
+            <li><span>4</span>Assenta e mostra o conteúdo</li>
+          </ol>
+          <div class="progress"><i id="seqbar"></i></div>
+        </div>
+        <div class="frames lg" id="frames" data-reveal style="--d:.1s">
+          <img class="on" src="img/liquid-1.webp" alt="Pílula do widget começando a se esticar" width="760" height="640" loading="lazy">
+          <img src="img/liquid-2.webp" alt="Vidro subindo da barra" width="760" height="640" loading="lazy">
+          <img src="img/liquid-3.webp" alt="Vidro tomando forma de cartão" width="760" height="640" loading="lazy">
+          <img src="img/liquid-4.webp" alt="Cartão assentado sobre a barra" width="760" height="640" loading="lazy">
+          <img class="w-final" src="img/w-music.webp" alt="Widget de música aberto" width="428" height="181" loading="lazy">
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- Estilos -->
+  <section id="estilos">
+    <div class="wrap">
+      <div class="head center" data-reveal>
+        <span class="kicker">Ajuste ao vivo</span>
+        <h2>Seis estilos.<br><span class="shine">Infinitas combinações.</span></h2>
+        <p class="sub">Do vidro limpo, com o papel de parede nítido, ao bem fosco. Experimente aqui: é o mesmo controle que você tem no app.</p>
+      </div>
+      <div class="studio lg" id="studio" data-reveal>
+        <img class="wall" src="img/wallpaper.webp" alt="" width="1920" height="1080" loading="lazy">
+        <div class="demo-card">
+          <h4>Tocando agora</h4>
+          <p>Vidro, tinta e luz mudam juntos.</p>
+          <div class="meter"><i></i></div>
+        </div>
+        <div class="demo-bar" aria-hidden="true">
+          <i style="--c1:#4f8bff;--c2:#7a5cff"></i><i style="--c1:#ff6fb5;--c2:#ff9a7a"></i><i style="--c1:#ffd27a;--c2:#ff9f4a"></i><i style="--c1:#5fe0b0;--c2:#2fb3ff"></i><i style="--c1:#b48bff;--c2:#ff7ad9"></i>
+        </div>
+      </div>
+      <div class="presets" id="presets" role="group" aria-label="Estilos prontos">
+        <button class="lg rf" aria-pressed="true" data-p="padrao" style="--sw:linear-gradient(135deg,#5b6dff,#9a6bff)"><i></i>Padrão</button>
+        <button class="lg rf" aria-pressed="false" data-p="cristal" style="--sw:linear-gradient(135deg,#8fd3ff,#d8f0ff)"><i></i>Cristal</button>
+        <button class="lg rf" aria-pressed="false" data-p="fosco" style="--sw:linear-gradient(135deg,#e6e8f0,#aeb4c4)"><i></i>Fosco</button>
+        <button class="lg rf" aria-pressed="false" data-p="noite" style="--sw:linear-gradient(135deg,#1a1c28,#3b3f55)"><i></i>Noite</button>
+        <button class="lg rf" aria-pressed="false" data-p="aurora" style="--sw:linear-gradient(135deg,#4f8bff,#7fe0ff)"><i></i>Aurora</button>
+        <button class="lg rf" aria-pressed="false" data-p="rose" style="--sw:linear-gradient(135deg,#ff7ab8,#ffc0d9)"><i></i>Rosé</button>
+      </div>
+      <div class="sliders lg" data-reveal>
+        <label>Desfoque <input type="range" id="s-blur" min="0" max="48" value="22"></label>
+        <label>Opacidade <input type="range" id="s-veil" min="0" max="80" value="32"></label>
+        <label>Cantos <input type="range" id="s-radius" min="6" max="30" value="22"></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Números -->
+  <section>
+    <div class="wrap">
+      <div class="head center" data-reveal>
+        <span class="kicker">Leve e reversível</span>
+        <h2>Bonito por fora.<br><span class="shine">Respeitoso por dentro.</span></h2>
+        <p class="sub">Fica nos ícones ocultos, abre com o Windows e reaplica o vidro sozinho quando o Explorer reinicia. Desligou ou saiu, o Windows volta ao visual original.</p>
+      </div>
+      <div class="stats">
+        <div class="stat lg spot" data-reveal><b data-count="0">0</b><span>servidores. Tudo roda no seu PC.</span></div>
+        <div class="stat lg spot" data-reveal style="--d:.08s"><b data-count="0">0</b><span>anúncios e zero telemetria.</span></div>
+        <div class="stat lg spot" data-reveal style="--d:.16s"><b data-count="6">6</b><span>estilos prontos, e 8 cores de tinta.</span></div>
+        <div class="stat lg spot" data-reveal style="--d:.24s"><b data-count="1">1</b><span>clique para voltar ao visual original.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Agenda: explica o uso dos dados (exigido pelo Google) -->
   <section id="google-agenda">
     <div class="wrap">
-      <h2>Widget de agenda e a sua conta Google</h2>
-      <p class="sub">A agenda é opcional. Ela só se conecta ao Google quando você mesmo clica em “Conectar conta Google”.</p>
-      <div class="glass google">
-        <p>Ao conectar, o WinGlass pede ao Google permissão <strong>somente de leitura</strong> para a sua agenda e usa esses dados apenas para mostrar o widget:</p>
-        <ul>
-          <li>lê a lista das suas agendas, para você escolher quais aparecem;</li>
-          <li>lê os eventos do mês exibido e dos próximos dois meses (título, horário, local, cor e o link do evento), para mostrar o mês e a lista de próximos eventos;</li>
-          <li>lê o seu endereço de e-mail, só para mostrar qual conta está conectada.</li>
-        </ul>
-        <p>Os eventos ficam apenas na memória enquanto o widget está aberto. Nada é enviado a servidores do WinGlass (não existem), vendido ou compartilhado. Você pode desconectar quando quiser no próprio app ou em <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Detalhes na <a href="privacidade.html">política de privacidade</a>.</p>
+      <div class="google lg" data-reveal>
+        <div>
+          <span class="kicker">Google Agenda</span>
+          <h2 style="font-size:clamp(28px,4vw,44px)">Sua agenda, só para você ver.</h2>
+          <p>A agenda é opcional. Ela só se conecta ao Google quando você clica em “Conectar conta Google”, e o login acontece na página do próprio Google. O WinGlass pede permissão <strong>somente de leitura</strong> e usa os dados apenas para mostrar o widget:</p>
+          <ul>
+            <li>lê a lista das suas agendas, para você escolher quais aparecem;</li>
+            <li>lê os eventos do mês exibido e dos próximos dois meses (título, horário, local, cor e o link do evento);</li>
+            <li>lê o seu endereço de e-mail, só para mostrar qual conta está conectada.</li>
+          </ul>
+          <p>Os eventos ficam apenas na memória. Nada é enviado a servidores do WinGlass (eles não existem), vendido ou compartilhado. Desconecte quando quiser no app ou em <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>. Detalhes na <a href="privacidade.html">política de privacidade</a>.</p>
+        </div>
+        <div class="art"><img src="img/w-calendar.webp" alt="Widget de agenda do WinGlass" width="338" height="305" loading="lazy"></div>
       </div>
-      <img class="shot" src="img/agenda.jpg" alt="Widget de agenda do WinGlass mostrando o mês acima da pílula da barra" width="1200" height="675" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Perguntas -->
+  <section id="perguntas">
+    <div class="wrap">
+      <div class="head center" data-reveal>
+        <span class="kicker">Perguntas</span>
+        <h2>Antes de instalar.</h2>
+      </div>
+      <div class="faq">
+        <details class="lg" data-reveal><summary>Quanto custa?</summary><p>Nada. O WinGlass é gratuito na Microsoft Store, sem anúncios e sem compras dentro do app.</p></details>
+        <details class="lg" data-reveal><summary>Funciona no Windows 10?</summary><p>Não. O WinGlass foi feito para o Windows 11, que é onde ficam a barra, o menu Iniciar e os menus que ele transforma.</p></details>
+        <details class="lg" data-reveal><summary>Ele muda alguma coisa no sistema para sempre?</summary><p>Não. O vidro é aplicado enquanto o app está ligado. Desligou ou saiu, o Windows volta exatamente ao visual original. Ao desinstalar, o Windows remove tudo.</p></details>
+        <details class="lg" data-reveal><summary>Preciso de conta Google?</summary><p>Só se quiser ver os seus eventos no widget de agenda. Todo o resto funciona sem conta nenhuma.</p></details>
+        <details class="lg" data-reveal><summary>O WinGlass coleta meus dados?</summary><p>Não. Ele não tem servidores, telemetria nem anúncios. Configurações, anotações e o histórico da área de transferência ficam no seu computador. Leia a <a href="privacidade.html">política de privacidade</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chamada final -->
+  <section>
+    <div class="wrap">
+      <div class="final lg spin spot" data-reveal>
+        <i class="orb a" aria-hidden="true"></i><i class="orb b" aria-hidden="true"></i>
+        <span class="kicker">Grátis na Microsoft Store</span>
+        <h2>Deixe o seu Windows<br><span class="shine">de vidro.</span></h2>
+        <p class="sub">Instale em um clique. Se não gostar, um clique devolve o visual original.</p>
+        <a class="store lg rf magnetic" href="https://apps.microsoft.com/detail/9NJP11JXN4S9?mode=direct" aria-label="Baixar o WinGlass na Microsoft Store">
+          <img src="img/ms-store-white.svg" alt="Baixar na Microsoft Store" width="161" height="44" loading="lazy">
+        </a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer id="contato">
   <div class="wrap">
-    <span>WinGlass · por Gabriel Serejo</span>
-    <span>Contato: <a href="mailto:gabrielserejo21@gmail.com">gabrielserejo21@gmail.com</a></span>
-    <span><a href="privacidade.html">Política de privacidade</a></span>
+    <a class="brand" href="./"><img src="img/icon.png" alt="">WinGlass</a>
+    <nav aria-label="Rodapé">
+      <a href="https://apps.microsoft.com/detail/9NJP11JXN4S9?mode=direct">Microsoft Store</a>
+      <a href="privacidade.html">Política de privacidade</a>
+      <a href="mailto:gabrielserejo21@gmail.com">Contato</a>
+    </nav>
+    <span>© 2026 Gabriel Serejo</span>
   </div>
 </footer>
+
+<script src="app.js" defer></script>
 </body>
 </html>
